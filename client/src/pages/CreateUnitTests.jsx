@@ -325,20 +325,22 @@ export default function CreateUnitTests() {
         >
           <RotateCcw className="h-4 w-4" /> Reset Form
         </button>
-        <button
-          onClick={handleUpload}
-          className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-2.5 rounded-xl font-bold transition-all shadow-md shadow-indigo-500/20 hover:-translate-y-0.5"
-        >
-          <Save className="h-5 w-5" /> {editingId ? "Update Test" : "Save Unit Test"}
-        </button>
-        {editingId && (
+        <div className="flex items-center gap-4">
+          {editingId && (
+            <button
+              onClick={handleReset}
+              className="text-slate-500 hover:text-slate-800 hover:bg-slate-100 px-4 py-2.5 rounded-xl font-medium transition-colors"
+            >
+              Cancel Edit
+            </button>
+          )}
           <button
-            onClick={handleReset}
-            className="absolute -top-12 right-0 text-slate-500 hover:text-slate-800 hover:bg-slate-100 px-4 py-2.5 rounded-xl font-medium transition-colors"
+            onClick={handleUpload}
+            className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-2.5 rounded-xl font-bold transition-all shadow-md shadow-indigo-500/20 hover:-translate-y-0.5"
           >
-            Cancel Edit
+            <Save className="h-5 w-5" /> {editingId ? "Update Test" : "Save Unit Test"}
           </button>
-        )}
+        </div>
       </div>
 
       <hr className="my-10 border-slate-200" />
