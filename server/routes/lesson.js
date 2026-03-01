@@ -23,4 +23,14 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Delete Lesson (Admin)
+router.delete("/delete/:id", async (req, res) => {
+  try {
+    await Lesson.findByIdAndDelete(req.params.id);
+    res.json({ message: "Lesson deleted successfully" });
+  } catch (err) {
+    res.status(500).json(err.message);
+  }
+});
+
 export default router;
