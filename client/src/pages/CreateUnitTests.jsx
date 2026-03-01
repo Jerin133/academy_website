@@ -1,12 +1,48 @@
 import { API_URL } from '../config.js';
 import { useState } from "react";
 import axios from "axios";
-import { Plus, X, ListPlus, Save, RotateCcw, HelpCircle, FileEdit, CheckCircle2 } from "lucide-react";
+import { Plus, X, ListPlus, Save, RotateCcw, HelpCircle, FileEdit, CheckCircle2, Clock, Trash2, Edit } from "lucide-react";
+import { useEffect } from "react";
 import toast from 'react-hot-toast';
 
 export default function CreateUnitTests() {
   const [subject, setSubject] = useState("");
   const [topicNumber, setTopicNumber] = useState("");
+  const [tests, setTests] = useState([]);
+  const [editingId, setEditingId] = useState(null);
+
+  useEffect(() => {
+    fetchTests();
+  }, []);
+
+  const fetchTests = async () => {
+    try {
+      const res = await axios.get(`${API_URL}/api/unit-tests`);
+      setTests(res.data);
+    } catch (err) {
+      console.error("Error fetching unit tests", err);
+    }
+  };
+
+  const deleteTest = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this unit test?")) return;
+    try {
+      await axios.delete(`${API_URL}/api/unit-tests/delete/${id}`);
+      toast.success("Test deleted successfully!");
+      fetchTests();
+    } catch (err) {
+      console.error(err);
+      toast.error("Error deleting test");
+    }
+  };
+
+  const editTest = (test) => {
+    setEditingId(test._id);
+    setSubject(test.subject);
+    setTopicNumber(test.topicNumber);
+    setQuestions(test.questions || []);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   const [questions, setQuestions] = useState([
     {
@@ -110,7 +146,7 @@ export default function CreateUnitTests() {
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center gap-3 mb-8">
         <FileEdit className="h-8 w-8 text-indigo-600" />
-        <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Create Unit Test</h1>
+        <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">{editingId ? "Edit Unit Test" : "Create Unit Test"}</h1>
       </div>
 
       {/* Basic Info Panel */}
