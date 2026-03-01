@@ -64,7 +64,7 @@ export default function ManageLessons() {
   const handleDeleteLesson = async (id, e) => {
     e.stopPropagation();
     if (!window.confirm("Are you sure you want to delete this lesson?")) return;
-    
+
     try {
       await axios.delete(`${API_URL}/api/lessons/delete/${id}`);
       if (selectedLesson?._id === id) {
@@ -221,34 +221,40 @@ export default function ManageLessons() {
                 {selectedSubject} Lessons
               </h3>
 
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {groupedLessons[selectedSubject].map((lesson) => (
-                  <div
-                    key={lesson._id}
-                    onClick={() => setSelectedLesson(lesson)}
-                    className="group flex gap-4 p-4 rounded-2xl border border-slate-200 hover:border-indigo-300 hover:shadow-md transition-all cursor-pointer hover:bg-indigo-50/50"
-                  >
-                    <div className="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center shrink-0">
-                      <ImageIcon className="h-5 w-5" />
-                    </div>
-                    <div className="flex-1">
-                      <span className="text-xs font-bold text-indigo-600 uppercase tracking-widest block mb-1">
-                        Topic {lesson.topicNumber}
-                      </span>
-                      <p className="font-semibold text-slate-900 line-clamp-2 leading-tight">
-                        {lesson.title}
-                      </p>
-                    </div>
-                    <button
-                      onClick={(e) => handleDeleteLesson(lesson._id, e)}
-                      className="p-2 h-10 w-10 shrink-0 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors border border-transparent self-center z-10 relative"
-                      title="Delete Lesson"
+              {!(groupedLessons[selectedSubject]?.length) ? (
+                <div className="text-center py-12 text-slate-500 bg-slate-50 border border-slate-200 rounded-3xl mt-4">
+                  <p>No lessons remain in this subject.</p>
+                </div>
+              ) : (
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {groupedLessons[selectedSubject].map((lesson) => (
+                    <div
+                      key={lesson._id}
+                      onClick={() => setSelectedLesson(lesson)}
+                      className="group flex gap-4 p-4 rounded-2xl border border-slate-200 hover:border-indigo-300 hover:shadow-md transition-all cursor-pointer hover:bg-indigo-50/50"
                     >
-                      <Trash2 className="h-5 w-5 mx-auto" />
-                    </button>
-                  </div>
-                ))}
-              </div>
+                      <div className="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center shrink-0">
+                        <ImageIcon className="h-5 w-5" />
+                      </div>
+                      <div className="flex-1">
+                        <span className="text-xs font-bold text-indigo-600 uppercase tracking-widest block mb-1">
+                          Topic {lesson.topicNumber}
+                        </span>
+                        <p className="font-semibold text-slate-900 line-clamp-2 leading-tight">
+                          {lesson.title}
+                        </p>
+                      </div>
+                      <button
+                        onClick={(e) => handleDeleteLesson(lesson._id, e)}
+                        className="p-2 h-10 w-10 shrink-0 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors border border-transparent self-center z-10 relative"
+                        title="Delete Lesson"
+                      >
+                        <Trash2 className="h-5 w-5 mx-auto" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 
