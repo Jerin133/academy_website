@@ -1,4 +1,4 @@
-import { API_URL } from '../../config.js';
+import { API_URL } from '../config.js';
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { CalendarDays, Clock, Video, MonitorPlay, Plus, Trash2, Link as LinkIcon } from "lucide-react";

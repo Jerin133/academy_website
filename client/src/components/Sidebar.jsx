@@ -1,4 +1,4 @@
-import { API_URL } from '../../config.js';
+import { API_URL } from '../config.js';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { LayoutDashboard, BookOpen, Target, CalendarDays, GraduationCap, X, Bell, User, LogOut } from "lucide-react";
 import { useState, useEffect } from "react";

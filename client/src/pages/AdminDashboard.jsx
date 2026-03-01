@@ -1,4 +1,4 @@
-import { API_URL } from '../../config.js';
+import { API_URL } from '../config.js';
 import { Link } from "react-router-dom";
 import { Library, FileEdit, Target, Users, BookOpen, Clock, ArrowRight } from "lucide-react";
 import { useState, useEffect } from "react";

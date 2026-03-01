@@ -1,4 +1,4 @@
-import { API_URL } from '../../config.js';
+import { API_URL } from '../config.js';
 import axios from "axios";
 import { ArrowLeft, CheckCircle2, RotateCcw, Send, FileQuestion } from "lucide-react";
 import toast from 'react-hot-toast';

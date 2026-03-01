@@ -1,4 +1,4 @@
-import { API_URL } from '../../config.js';
+import { API_URL } from '../config.js';
 import { Link } from "react-router-dom";
 import { BookOpen, Target, PlayCircle, Star, Video, Award } from "lucide-react";
 import { useState, useEffect } from "react";

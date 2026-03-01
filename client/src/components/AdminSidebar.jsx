@@ -1,4 +1,4 @@
-import { API_URL } from '../../config.js';
+import { API_URL } from '../config.js';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { LayoutDashboard, Library, FileEdit, Target, FolderOpen, Video, ShieldCheck, X, Bell, Shield, LogOut } from "lucide-react";
 import { useState, useEffect } from "react";

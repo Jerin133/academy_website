@@ -1,4 +1,4 @@
-import { API_URL } from '../../config.js';
+import { API_URL } from '../config.js';
 import { useState } from "react";
 import axios from "axios";
 import { Plus, X, ListPlus, Save, RotateCcw, HelpCircle, FileEdit, CheckCircle2 } from "lucide-react";

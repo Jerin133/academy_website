@@ -1,4 +1,4 @@
-import { API_URL } from '../../config.js';
+import { API_URL } from '../config.js';
 import axios from "axios";
 import { useState, useEffect, useRef } from "react";
 import { FolderOpen, UploadCloud, FileText, Trash2, Download } from "lucide-react";
