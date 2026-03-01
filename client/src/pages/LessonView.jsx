@@ -23,7 +23,7 @@ export default function LessonView() {
       });
 
     axios
-      .get(`http://localhost:5000/api/unit-tests/${subject}/${topic}`)
+      .get(`${API_URL}/api/unit-tests/${subject}/${topic}`)
       .then(res => setUnitTest(res.data))
       .catch(() => setUnitTest(null));
 

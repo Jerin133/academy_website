@@ -33,7 +33,7 @@ export default function OnlineClassAdmin() {
   };
 
   const handlePostpone = async (id) => {
-    await axios.put(`http://localhost:5000/api/online-classes/postpone/${id}`);
+    await axios.put(`${API_URL}/api/online-classes/postpone/${id}`);
     fetchClasses();
   };
 

@@ -29,7 +29,7 @@ export default function CreateMockTests() {
         if (!window.confirm("Are you sure you want to delete this mock test?")) return;
         try {
             const token = localStorage.getItem("token");
-            await axios.delete(`http://localhost:5000/api/tests/delete/${id}`, {
+            await axios.delete(`${API_URL}/api/tests/delete/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             fetchTests();
@@ -126,7 +126,7 @@ export default function CreateMockTests() {
 
             if (editingId) {
                 await axios.put(
-                    `http://localhost:5000/api/tests/update/${editingId}`,
+                    `${API_URL}/api/tests/update/${editingId}`,
                     { subject, title, timeLimit, questions },
                     config
                 );

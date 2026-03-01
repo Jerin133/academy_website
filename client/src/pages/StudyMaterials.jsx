@@ -49,7 +49,7 @@ export default function StudyMaterials() {
 
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this material?")) return;
-    await axios.delete(`http://localhost:5000/api/materials/${id}`);
+    await axios.delete(`${API_URL}/api/materials/${id}`);
     fetchMaterials();
   };
 
@@ -161,7 +161,7 @@ export default function StudyMaterials() {
 
                     <div className="flex items-center gap-2 shrink-0">
                       <a
-                        href={`http://localhost:5000/api/materials/download/${mat._id}`}
+                        href={`${API_URL}/api/materials/download/${mat._id}`}
                         className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors border border-transparent hover:border-blue-100"
                         title="Download"
                       >

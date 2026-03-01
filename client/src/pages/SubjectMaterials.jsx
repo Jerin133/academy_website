@@ -12,7 +12,7 @@ export default function SubjectMaterials() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/materials/${subject}`)
+      .get(`${API_URL}/api/materials/${subject}`)
       .then(res => setMaterials(res.data));
   }, [subject]);
 
@@ -60,7 +60,7 @@ export default function SubjectMaterials() {
                 </div>
 
                 <a
-                  href={`http://localhost:5000/${mat.filePath}`}
+                  href={`${API_URL}/${mat.filePath}`}
                   download
                   className="shrink-0 flex items-center justify-center gap-2 bg-white text-indigo-600 border border-indigo-200 hover:bg-indigo-50 hover:border-indigo-300 px-6 py-2.5 rounded-xl font-semibold transition-all shadow-sm"
                 >

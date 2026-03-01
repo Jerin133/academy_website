@@ -35,7 +35,7 @@ export default function MockTests() {
 
   // 🔹 Start test
   const startTest = async (id) => {
-    const res = await axios.get(`http://localhost:5000/api/tests/single/${id}`);
+    const res = await axios.get(`${API_URL}/api/tests/single/${id}`);
     setSelectedTest(res.data);
     setAnswers([]);
     setResult(null);

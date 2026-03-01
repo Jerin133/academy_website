@@ -14,7 +14,7 @@ export default function AttemptTest() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/unit-tests/${subject}/${topic}`)
+      .get(`${API_URL}/api/unit-tests/${subject}/${topic}`)
       .then(res => setUnitTest(res.data));
   }, [subject, topic]);
 

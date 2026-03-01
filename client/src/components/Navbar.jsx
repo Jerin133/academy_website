@@ -18,11 +18,11 @@ export default function Navbar() {
             <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-2.5 rounded-xl shadow-md shadow-blue-500/20 group-hover:shadow-blue-500/40 group-hover:-translate-y-0.5 transition-all duration-300">
               <GraduationCap className="h-6 w-6 text-white" />
             </div>
-            <div className="flex flex-col">
-              <span className="text-[11px] font-bold text-slate-500 uppercase tracking-widest leading-none mb-1">
+            <div className="flex flex-col min-w-0">
+              <span className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase tracking-widest leading-none mb-1 truncate max-w-[140px] sm:max-w-none">
                 Dr. M. SenthilKumar's
               </span>
-              <span className="text-xl font-extrabold bg-gradient-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent leading-none">
+              <span className="text-lg sm:text-xl font-extrabold bg-gradient-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent leading-none">
                 Academy
               </span>
             </div>
