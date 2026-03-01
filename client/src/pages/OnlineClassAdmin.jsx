@@ -189,10 +189,15 @@ export default function OnlineClassAdmin() {
 
                   {!isPostponed && (
                     <div className="pt-4 border-t border-slate-100 relative z-20">
-                      <div className="flex items-center gap-2 text-blue-600 text-sm bg-blue-50 px-3 py-2 rounded-lg truncate">
+                      <a
+                        href={cls.meetingLink?.startsWith('http') ? cls.meetingLink : `https://${cls.meetingLink}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-blue-600 hover:text-blue-800 text-sm bg-blue-50 hover:bg-blue-100 px-3 py-2 rounded-lg truncate transition-colors"
+                      >
                         <LinkIcon className="h-4 w-4 shrink-0" />
                         <span className="truncate">{cls.meetingLink}</span>
-                      </div>
+                      </a>
                     </div>
                   )}
                 </div>
