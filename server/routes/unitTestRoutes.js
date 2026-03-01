@@ -9,27 +9,13 @@ router.post("/add", async (req, res) => {
 
   try {
     const existingTest = await UnitTest.findOne({
-      subject,
+      subject: new RegExp(`^${subject.trim()}$`, "i"),
       topicNumber
     });
 
     if (existingTest) {
-
-      // 🔥 Get current number of questions
-      const currentLength = existingTest.questions.length;
-
-      // 🔥 Auto-adjust question numbers
-      const updatedQuestions = questions.map((q, index) => ({
-        ...q,
-        questionNumber: currentLength + index + 1
-      }));
-
-      existingTest.questions.push(...updatedQuestions);
-
-      await existingTest.save();
-
-      return res.json({
-        message: "Questions appended successfully!"
+      return res.status(400).json({
+        error: "A unit test for this topic already exists. Please use the Edit button below to modify it!"
       });
     }
 
@@ -40,7 +26,7 @@ router.post("/add", async (req, res) => {
     }));
 
     const newTest = new UnitTest({
-      subject,
+      subject: subject.trim(),
       topicNumber,
       questions: newQuestions
     });
@@ -61,7 +47,7 @@ router.post("/add", async (req, res) => {
 router.get("/:subject/:topic", async (req, res) => {
   try {
     const test = await UnitTest.findOne({
-      subject: req.params.subject,
+      subject: new RegExp(`^${req.params.subject.trim()}$`, "i"),
       topicNumber: req.params.topic
     });
 

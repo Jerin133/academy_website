@@ -40,7 +40,7 @@ export default function CreateUnitTests() {
     setEditingId(test._id);
     setSubject(test.subject);
     setTopicNumber(test.topicNumber);
-    setQuestions(test.questions || []);
+    setQuestions(JSON.parse(JSON.stringify(test.questions || [])));
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
