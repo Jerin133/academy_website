@@ -112,20 +112,36 @@ export default function CreateUnitTests() {
       return;
     }
 
-    await axios.post(`${API_URL}/api/unit-tests/add`, {
-      subject,
-      topicNumber: Number(topicNumber),
-      questions
-    });
-
-    toast.success("Unit Test Uploaded Successfully!");
-    handleReset();
+    try {
+      if (editingId) {
+        await axios.put(`${API_URL}/api/unit-tests/update/${editingId}`, {
+          subject,
+          topicNumber: Number(topicNumber),
+          questions
+        });
+        toast.success("Unit Test Updated Successfully!");
+      } else {
+        await axios.post(`${API_URL}/api/unit-tests/add`, {
+          subject,
+          topicNumber: Number(topicNumber),
+          questions
+        });
+        toast.success("Unit Test Uploaded Successfully!");
+      }
+      handleReset();
+      fetchTests();
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    } catch (err) {
+      console.error(err);
+      toast.error(err.response?.data?.error || "An error occurred saving the test.");
+    }
   };
 
   const handleReset = () => {
     setSubject("");
     setTopicNumber("");
     setQuestions([{ questionType: "MCQ", questionText: "", options: [""], answers: [] }]);
+    setEditingId(null);
   };
 
   const removeQuestion = (index) => {
