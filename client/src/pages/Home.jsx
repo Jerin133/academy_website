@@ -241,7 +241,7 @@ export default function Home() {
       {/* 👨‍🏫 Professor Details Modal */}
       {showProfessorModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 animate-in fade-in duration-300">
-          <div className="bg-white rounded-3xl shadow-2xl max-w-5xl w-full overflow-hidden flex flex-col sm:flex-row animate-in zoom-in-95 duration-300">
+          <div className="bg-white rounded-3xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto overflow-x-hidden flex flex-col sm:flex-row animate-in zoom-in-95 duration-300">
             {/* Image side */}
             <div className="sm:w-2/5 relative h-64 sm:h-auto">
               <img
