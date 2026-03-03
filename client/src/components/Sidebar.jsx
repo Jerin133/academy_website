@@ -62,7 +62,7 @@ export default function Sidebar({ onClose }) {
             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest leading-none mb-1">
               Dr. M. SenthilKumar's
             </span>
-            <span className="text-lg font-extrabold bg-gradient-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent leading-none tracking-tight">
+            <span className="text-sm font-extrabold bg-gradient-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent leading-none tracking-tight">
               Chemistry Academy
             </span>
           </div>
