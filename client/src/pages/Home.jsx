@@ -271,7 +271,7 @@ export default function Home() {
 
               <div className="space-y-4 text-slate-600">
                 <p className="text-sm leading-relaxed">
-                  With over 15 years of industry experience bridging the gap between academia and enterprise architecture, Dr. SenthilKumar leads our core chemistry curriculum.
+                  Dr. M. Senthilkumar is an accomplished and experienced educator with 18 years of dedicated teaching service. He secured an outstanding GATE score of 92.42 and successfully cleared the TRB examinations for Polytechnic (2006) and Engineering Colleges (2008), reflecting his strong academic foundation and subject expertise. In addition to his extensive teaching experience, he has published 15 research papers, showcasing his commitment to research and academic excellence. His combination of knowledge, experience, and research contributions makes him a highly respected mentor and guide for students.
                 </p>
                 <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 mb-4">
                   <h4 className="text-xs font-bold text-slate-900 mb-3 uppercase tracking-wider">Contact Information</h4>
