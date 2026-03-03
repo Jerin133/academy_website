@@ -63,7 +63,7 @@ export default function Sidebar({ onClose }) {
               Dr. M. SenthilKumar's
             </span>
             <span className="text-lg font-extrabold bg-gradient-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent leading-none tracking-tight">
-              Academy
+              Chemistry Academy
             </span>
           </div>
         </div>

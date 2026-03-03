@@ -203,7 +203,7 @@ export default function Home() {
                     Dr. M. SenthilKumar's
                   </span>
                   <span className="text-xl font-extrabold text-slate-900 leading-none tracking-tight">
-                    Academy
+                    Chemistry Academy
                   </span>
                 </div>
               </div>

@@ -23,7 +23,7 @@ export default function Navbar() {
                 Dr. M. SenthilKumar's
               </span>
               <span className="text-lg sm:text-xl font-extrabold bg-gradient-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent leading-none">
-                Academy
+                Chemistry Academy
               </span>
             </div>
           </Link>
