@@ -19,7 +19,8 @@ const allowedOrigins = [
   process.env.FRONTEND_URL,
   "http://localhost:5173",
   "https://www.dr-senthilkumar-chemistry-academy.com",
-  "https://dr-senthilkumar-chemistry-academy.com"
+  "https://dr-senthilkumar-chemistry-academy.com",
+  "https://dr-senthilkumar-academy.vercel.app"
 ];
 
 app.use(cors({
