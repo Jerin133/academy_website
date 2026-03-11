@@ -55,8 +55,8 @@ export default function Sidebar({ onClose }) {
       {/* Brand Header */}
       <div className="h-16 flex items-center justify-between px-6 border-b border-slate-100 shrink-0">
         <div className="flex items-center gap-3 group">
-          <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-2 rounded-lg shadow-sm text-white">
-            <GraduationCap className="h-6 w-6" />
+          <div className="rounded-xl overflow-hidden shadow-sm border-2 border-white w-10 h-10">
+            <img src="/new-logo.jpg" alt="Logo" className="w-full h-full object-cover" />
           </div>
           <div className="flex flex-col">
             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest leading-none mb-1">

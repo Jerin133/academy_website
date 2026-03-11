@@ -20,6 +20,7 @@ import StudyMaterials from "./pages/StudyMaterials";
 import SubjectMaterials from "./pages/SubjectMaterials";
 import OnlineClassAdmin from "./pages/OnlineClassAdmin";
 import OnlineClasses from "./pages/OnlineClasses";
+import AdminStudents from "./pages/AdminStudents";
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
           <Route path="create-mock-tests" element={<CreateMockTests />} />
           <Route path="study-materials" element={<StudyMaterials />} />
           <Route path="online-classes" element={<OnlineClassAdmin />} />
+          <Route path="students" element={<AdminStudents />} />
         </Route>
       </Routes>
     </BrowserRouter>

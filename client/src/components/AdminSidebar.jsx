@@ -1,6 +1,6 @@
 import { API_URL } from '../config.js';
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { LayoutDashboard, Library, FileEdit, Target, FolderOpen, Video, ShieldCheck, X, Bell, Shield, LogOut } from "lucide-react";
+import { LayoutDashboard, Library, FileEdit, Target, FolderOpen, Video, ShieldCheck, X, Bell, Shield, LogOut, Users } from "lucide-react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -51,6 +51,7 @@ export default function AdminSidebar({ onClose }) {
     { path: "/admin-dashboard/create-mock-tests", name: "Mock Tests", icon: <Target className="h-5 w-5" />, active: location.pathname.startsWith("/admin-dashboard/create-mock-tests") },
     { path: "/admin-dashboard/study-materials", name: "Study Materials", icon: <FolderOpen className="h-5 w-5" />, active: location.pathname.startsWith("/admin-dashboard/study-materials") },
     { path: "/admin-dashboard/online-classes", name: "Online Classes", icon: <Video className="h-5 w-5" />, active: location.pathname.startsWith("/admin-dashboard/online-classes") },
+    { path: "/admin-dashboard/students", name: "Students", icon: <Users className="h-5 w-5" />, active: location.pathname.startsWith("/admin-dashboard/students") },
   ];
 
   return (

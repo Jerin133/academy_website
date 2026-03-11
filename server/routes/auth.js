@@ -84,4 +84,26 @@ router.get("/me", async (req, res) => {
   }
 });
 
+// GET ALL STUDENTS (ADMIN ONLY)
+router.get("/students", async (req, res) => {
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(401).json("No token provided");
+    }
+
+    const token = authHeader.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    if (decoded.role !== "admin") {
+      return res.status(403).json("Not authorized as admin");
+    }
+
+    const students = await User.find({ role: { $ne: "admin" } }).select("-password").sort({ createdAt: -1 });
+    res.json(students);
+  } catch (err) {
+    res.status(401).json("Invalid token");
+  }
+});
+
 export default router;

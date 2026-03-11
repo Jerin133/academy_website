@@ -1,26 +1,148 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
 import {
   BookOpen, UserCheck, Award, ArrowRight, PlayCircle, Star,
   GraduationCap, Laptop, Target, CheckCircle2, MessageCircle,
   TrendingUp, Play, Zap, Shield, Globe, Users, ArrowUpRight, X,
-  Mail, Phone
+  Mail, Phone, Sparkles
 } from "lucide-react";
 
 export default function Home() {
   const [showProfessorModal, setShowProfessorModal] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState(null);
+
+  useEffect(() => {
+    const handleClickOutside = () => setActiveDropdown(null);
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
+
+  const toggleDropdown = (e, name) => {
+    e.stopPropagation();
+    setActiveDropdown(activeDropdown === name ? null : name);
+  };
+
+  const scrollToProfessor = () => {
+    const el = document.getElementById("professor-details-section");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+      setTimeout(() => setShowProfessorModal(true), 800);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white font-sans selection:bg-blue-100 text-slate-800">
       <Navbar />
 
+      {/* Header Extension Block: Flash News Ticker + Sub-Navbar */}
+      <div className="w-full absolute top-16 left-0 right-0 z-40 flex flex-col">
+        {/* 📢 Premium Flash News Ticker */}
+        <div className="w-full bg-slate-50/95 backdrop-blur-md border-b border-slate-200/60 overflow-hidden flex items-center relative h-10 group shadow-sm">
+          
+          {/* Fixed "Updates" Badge on the left */}
+          <div className="absolute left-0 z-20 h-full flex items-center px-4 sm:px-5 bg-gradient-to-r from-blue-700 to-blue-600 shadow-[4px_0_12px_-2px_rgba(37,99,235,0.4)]">
+            <span className="flex items-center gap-1.5 text-white font-bold text-[11px] sm:text-xs tracking-wider uppercase">
+               <Zap className="w-3.5 h-3.5 fill-amber-400 text-amber-400 animate-pulse" /> Updates
+            </span>
+            {/* Angled edge */}
+            <div className="absolute right-[-14px] top-0 h-0 w-0 border-y-[20px] border-y-transparent border-l-[14px] border-l-blue-600"></div>
+          </div>
+
+          <div className="absolute left-[90px] sm:left-[110px] z-10 w-20 h-full bg-gradient-to-r from-slate-50 to-transparent pointer-events-none"></div>
+
+          <div className="flex whitespace-nowrap animate-ticker group-hover:[animation-play-state:paused] items-center text-[13px] font-medium pl-[110px] sm:pl-[140px]">
+            {/* Ticker Content duplicated for seamless infinite scroll effect */}
+            <div className="flex items-center gap-10 pr-10">
+              <span className="flex items-center gap-2.5 text-slate-800"><span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-gradient-to-r from-red-500 to-rose-500 text-white shadow-sm ring-1 ring-red-500/20">NEW</span> Advanced Organic Synthesis Masterclass enrolling now!</span>
+              <span className="flex items-center gap-2.5 text-slate-700"><span className="flex items-center justify-center w-5 h-5 rounded-full bg-blue-100"><Star className="w-3 h-3 text-blue-600 fill-blue-600" /></span> Join our upcoming live Q&A session with Dr. M SenthilKumar this Friday.</span>
+              <span className="flex items-center gap-2.5 text-slate-700"><span className="flex items-center justify-center w-5 h-5 rounded-full bg-emerald-100"><CheckCircle2 className="w-3 h-3 text-emerald-600" /></span> Term 2 examination results have been published in the student portal.</span>
+              <span className="flex items-center gap-2.5 text-slate-700"><span className="flex items-center justify-center w-5 h-5 rounded-full bg-indigo-100"><TrendingUp className="w-3 h-3 text-indigo-600" /></span> Early bird registration for the Summer Crash Course ends in <span className="font-bold text-indigo-600">3 days</span>.</span>
+            </div>
+
+            <div className="flex items-center gap-10 pr-10" aria-hidden="true">
+              <span className="flex items-center gap-2.5 text-slate-800"><span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-gradient-to-r from-red-500 to-rose-500 text-white shadow-sm ring-1 ring-red-500/20">NEW</span> Advanced Organic Synthesis Masterclass enrolling now!</span>
+              <span className="flex items-center gap-2.5 text-slate-700"><span className="flex items-center justify-center w-5 h-5 rounded-full bg-blue-100"><Star className="w-3 h-3 text-blue-600 fill-blue-600" /></span> Join our upcoming live Q&A session with Dr. M SenthilKumar this Friday.</span>
+              <span className="flex items-center gap-2.5 text-slate-700"><span className="flex items-center justify-center w-5 h-5 rounded-full bg-emerald-100"><CheckCircle2 className="w-3 h-3 text-emerald-600" /></span> Term 2 examination results have been published in the student portal.</span>
+              <span className="flex items-center gap-2.5 text-slate-700"><span className="flex items-center justify-center w-5 h-5 rounded-full bg-indigo-100"><TrendingUp className="w-3 h-3 text-indigo-600" /></span> Early bird registration for the Summer Crash Course ends in <span className="font-bold text-indigo-600">3 days</span>.</span>
+            </div>
+          </div>
+
+          <div className="absolute right-0 z-10 w-24 h-full bg-gradient-to-l from-slate-50 to-transparent pointer-events-none"></div>
+        </div>
+
+        {/* Transparent Sub-Navbar */}
+        <div className="w-full bg-transparent border-b border-gray-100/50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-center flex-[1_1_0%] items-center min-h-[3.5rem] py-2 gap-x-6 gap-y-2 sm:gap-x-12 flex-wrap text-center mx-auto w-full">
+              <button
+                className={`font-semibold text-sm transition-colors whitespace-nowrap ${activeDropdown ? "text-slate-600" : "text-blue-600"
+                  }`}
+              >
+                Home
+              </button>
+
+              {/* Courses */}
+              <div
+                className="relative group"
+                onMouseEnter={() => setActiveDropdown("courses")}
+                onMouseLeave={() => setActiveDropdown(null)}
+              >
+                <button
+                  onClick={(e) => toggleDropdown(e, "courses")}
+                  className={`text-slate-600 hover:text-blue-600 font-semibold text-sm transition-colors py-2 whitespace-nowrap cursor-pointer ${activeDropdown === "courses" ? "text-blue-600" : ""}`}
+                >
+                  Courses
+                </button>
+                <div className={`absolute left-1/2 -translate-x-1/2 top-full mt-1 w-48 bg-white/90 backdrop-blur-md rounded-xl shadow-xl border border-slate-100 transition-all duration-300 overflow-hidden ${activeDropdown === "courses" ? "opacity-100 visible" : "opacity-0 invisible group-hover:opacity-100 group-hover:visible"}`}>
+                  <div className="py-2 flex flex-col">
+                    <Link to="/register" className="px-4 py-2 text-xs font-medium text-slate-600 hover:bg-blue-50 hover:text-blue-600 cursor-pointer transition-colors block">Organic Chemistry</Link>
+                    <Link to="/register" className="px-4 py-2 text-xs font-medium text-slate-600 hover:bg-blue-50 hover:text-blue-600 cursor-pointer transition-colors block">Inorganic Chemistry</Link>
+                    <Link to="/register" className="px-4 py-2 text-xs font-medium text-slate-600 hover:bg-blue-50 hover:text-blue-600 cursor-pointer transition-colors block">Physical Chemistry</Link>
+                    <Link to="/register" className="px-4 py-2 text-xs font-medium text-slate-600 hover:bg-blue-50 hover:text-blue-600 cursor-pointer transition-colors block">Analytical Chemistry</Link>
+                  </div>
+                </div>
+              </div>
+
+              {/* Classes */}
+              <div
+                className="relative group"
+                onMouseEnter={() => setActiveDropdown("classes")}
+                onMouseLeave={() => setActiveDropdown(null)}
+              >
+                <button
+                  onClick={(e) => toggleDropdown(e, "classes")}
+                  className={`text-slate-600 hover:text-blue-600 font-semibold text-sm transition-colors py-2 whitespace-nowrap cursor-pointer ${activeDropdown === "classes" ? "text-blue-600" : ""}`}
+                >
+                  Classes
+                </button>
+                <div className={`absolute left-1/2 -translate-x-1/2 top-full mt-1 w-[340px] max-w-[90vw] bg-white/90 backdrop-blur-md rounded-xl shadow-xl border border-slate-100 transition-all duration-300 overflow-hidden ${activeDropdown === "classes" ? "opacity-100 visible" : "opacity-0 invisible group-hover:opacity-100 group-hover:visible"}`}>
+                  <div className="py-2">
+                    <a href="https://youtube.com/@dr_m_senthilkumar_chem_academy?si=etb4EQ5zbJE3gPhM" target="_blank" rel="noopener noreferrer" className="px-4 py-3 text-sm font-semibold text-slate-700 hover:text-blue-600 hover:bg-blue-50 flex items-center justify-center transition-colors">
+                      Dr. M Senthilkumar Chem Academy Youtube Channel
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* Contact Us */}
+              <button
+                onClick={scrollToProfessor}
+                className="text-slate-600 hover:text-blue-600 font-semibold text-sm transition-colors py-2 whitespace-nowrap"
+              >
+                Contact Us
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* 🌟 Refined Professional Hero Section */}
-      <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden bg-white">
+      <section className="relative pt-40 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-white">
         {/* Very subtle background pattern */}
-        <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] opacity-40"></div>
+        < div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] opacity-40" ></div >
         {/* Soft abstract blur */}
-        <div className="absolute top-0 right-0 -translate-y-12 translate-x-1/3 w-[800px] h-[600px] bg-blue-50/50 rounded-[100%] blur-3xl opacity-70 pointer-events-none"></div>
+        < div className="absolute top-0 right-0 -translate-y-12 translate-x-1/3 w-[800px] h-[600px] bg-blue-50/50 rounded-[100%] blur-3xl opacity-70 pointer-events-none" ></div >
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row items-center gap-16">
@@ -73,9 +195,37 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section >
 
-      {/* Institutional Stats section removed as per user request */}
+      {/* 🌟 Premium Excellence Banner */}
+      <section className="py-12 bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 relative overflow-hidden">
+        {/* Glow effects */}
+        <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-64 h-64 bg-blue-500/30 rounded-full blur-[80px] pointer-events-none"></div>
+        <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-64 h-64 bg-indigo-500/30 rounded-full blur-[80px] pointer-events-none"></div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
+            <div className="flex items-center flex-col md:flex-row gap-6">
+              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 p-1 shrink-0 shadow-lg shadow-orange-500/20">
+                <div className="w-full h-full bg-slate-900 rounded-full flex items-center justify-center">
+                  <Award className="w-8 h-8 text-amber-400" />
+                </div>
+              </div>
+              <div>
+                <h3 className="text-amber-400 font-bold tracking-widest uppercase text-sm mb-1 flex items-center justify-center md:justify-start gap-2">
+                  <Sparkles className="w-4 h-4" /> Excellent Coaching
+                </h3>
+                <h2 className="text-2xl md:text-3xl font-extrabold text-white">Crack any government exam in chemistry.</h2>
+              </div>
+            </div>
+            <div className="shrink-0">
+              <Link to="/register" className="inline-flex items-center justify-center px-6 py-3 bg-white text-indigo-900 font-bold rounded-xl shadow-xl hover:bg-slate-50 transition-all hover:-translate-y-1 group">
+                Begin Preparation <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* ✨ Core Competencies (Professional Features) */}
       <section className="py-24 bg-white">
@@ -127,6 +277,77 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 🎯 Popular Exams Section */}
+      <section className="py-24 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-100/50 border border-blue-200 text-blue-700 text-sm font-semibold mb-6">
+              <Target className="w-4 h-4" /> Focused Preparation
+            </div>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-4">Master the Most Popular Exams</h2>
+            <p className="text-lg text-slate-600">Tailored curriculum and rigorous testing designed specifically for top-tier competitive examinations.</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {/* TRB Exam Card */}
+            <div className="group relative bg-white rounded-[2rem] p-8 shadow-sm hover:shadow-2xl hover:shadow-blue-900/5 border border-slate-100 transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-50 to-transparent rounded-bl-full -z-10 transition-transform group-hover:scale-110"></div>
+              
+              <div className="flex items-center justify-between mb-8">
+                <div className="w-16 h-16 rounded-2xl bg-blue-600 text-white flex items-center justify-center shadow-lg shadow-blue-600/20">
+                  <BookOpen className="w-8 h-8" />
+                </div>
+                <span className="px-4 py-1.5 bg-green-100 text-green-700 rounded-full text-xs font-bold tracking-wide uppercase">High Success Rate</span>
+              </div>
+
+              <h3 className="text-2xl font-extrabold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">TRB Chemistry</h3>
+              <p className="text-slate-600 mb-6 leading-relaxed">Comprehensive coaching covering the entire syllabus for Teachers Recruitment Board examinations. Mock tests and previous year question analysis.</p>
+
+              <div className="space-y-3 mb-8">
+                <div className="flex items-center gap-3 text-sm text-slate-700 font-medium">
+                  <CheckCircle2 className="w-5 h-5 text-blue-500" /> Complete Syllabus Coverage
+                </div>
+                <div className="flex items-center gap-3 text-sm text-slate-700 font-medium">
+                  <CheckCircle2 className="w-5 h-5 text-blue-500" /> Exhaustive Study Material
+                </div>
+              </div>
+
+              <Link to="/register" className="flex items-center gap-2 text-blue-600 font-bold hover:text-blue-700 uppercase tracking-wide text-sm">
+                Explore TRB Course <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+
+            {/* SET / NET Exam Card */}
+            <div className="group relative bg-white rounded-[2rem] p-8 shadow-sm hover:shadow-2xl hover:shadow-indigo-900/5 border border-slate-100 transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-indigo-50 to-transparent rounded-bl-full -z-10 transition-transform group-hover:scale-110"></div>
+              
+              <div className="flex items-center justify-between mb-8">
+                <div className="w-16 h-16 rounded-2xl bg-indigo-600 text-white flex items-center justify-center shadow-lg shadow-indigo-600/20">
+                  <GraduationCap className="w-8 h-8" />
+                </div>
+                <span className="px-4 py-1.5 bg-amber-100 text-amber-700 rounded-full text-xs font-bold tracking-wide uppercase">Expert Guidance</span>
+              </div>
+
+              <h3 className="text-2xl font-extrabold text-slate-900 mb-3 group-hover:text-indigo-600 transition-colors">SET / NET Chemistry</h3>
+              <p className="text-slate-600 mb-6 leading-relaxed">Deep dive into advanced concepts essential for succeeding in State and National Eligibility Tests. Intensive problem-solving sessions.</p>
+
+              <div className="space-y-3 mb-8">
+                <div className="flex items-center gap-3 text-sm text-slate-700 font-medium">
+                  <CheckCircle2 className="w-5 h-5 text-indigo-500" /> Advanced Problem Solving
+                </div>
+                <div className="flex items-center gap-3 text-sm text-slate-700 font-medium">
+                  <CheckCircle2 className="w-5 h-5 text-indigo-500" /> Dedicated Mentorship
+                </div>
+              </div>
+
+              <Link to="/register" className="flex items-center gap-2 text-indigo-600 font-bold hover:text-indigo-700 uppercase tracking-wide text-sm">
+                Explore SET/NET Course <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 🎓 Elite Faculty / Testimonial Section */}
       <section className="py-24 bg-slate-50 border-t border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -173,7 +394,7 @@ export default function Home() {
       </section>
 
       {/* 🚀 Professional Call to Action */}
-      <section className="py-24 bg-white text-center">
+      <section id="professor-details-section" className="py-24 bg-white text-center">
         <div className="max-w-3xl mx-auto px-4">
           <h2 className="text-4xl font-extrabold text-slate-900 mb-6 tracking-tight">Take the Next Step in Your Career</h2>
           <p className="text-xl text-slate-600 mb-10 font-normal">Join a network of professionals and academics. Enroll today to access our comprehensive learning suite.</p>
@@ -195,8 +416,8 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
             <div className="col-span-1 md:col-span-2">
               <div className="flex items-center gap-3 mb-4">
-                <div className="bg-blue-600 p-2 rounded-lg">
-                  <GraduationCap className="h-6 w-6 text-white" />
+                <div className="rounded-xl overflow-hidden shadow-md border-2 border-white w-12 h-12 flex items-center justify-center shrink-0">
+                  <img src="/new-logo.jpg" alt="Logo" className="w-full h-full object-cover" />
                 </div>
                 <div className="flex flex-col">
                   <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest leading-none mb-1">
@@ -209,6 +430,9 @@ export default function Home() {
               </div>
               <p className="text-slate-500 max-w-sm text-sm leading-relaxed">
                 Dedicated to providing excellence in digital education and professional development through innovative technology.
+              </p>
+              <p className="text-slate-700 max-w-sm text-sm font-semibold mt-4">
+                Founder: Muthaiya.Kalai
               </p>
             </div>
 
@@ -239,87 +463,86 @@ export default function Home() {
       </footer>
 
       {/* 👨‍🏫 Professor Details Modal */}
-      {showProfessorModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 animate-in fade-in duration-300">
-          <div className="bg-white rounded-3xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto overflow-x-hidden flex flex-col sm:flex-row animate-in zoom-in-95 duration-300">
-            {/* Image side */}
-            <div className="sm:w-2/5 relative h-64 sm:h-auto">
-              <img
-                src="/Professor.jpeg"
-                alt="Dr. M. SenthilKumar"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent flex items-end p-6 sm:hidden">
-                <h3 className="text-2xl font-bold text-white">Dr. M. SenthilKumar</h3>
-              </div>
-            </div>
-
-            {/* Content side */}
-            <div className="sm:w-3/5 p-8 relative flex flex-col justify-center">
-              <button
-                onClick={() => setShowProfessorModal(false)}
-                className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 rounded-full transition-colors"
-                aria-label="Close modal"
-              >
-                <X className="w-5 h-5" />
-              </button>
-
-              <div className="hidden sm:block mb-4">
-                <h3 className="text-2xl font-extrabold text-slate-900">Dr.M.SENTHILKUMAR</h3>
-                <p className="text-blue-600 font-medium text-sm">Associate Professor and Head of the Department (Chemistry)</p>
+      {
+        showProfessorModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 animate-in fade-in duration-300">
+            <div className="bg-white rounded-3xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto overflow-x-hidden flex flex-col sm:flex-row animate-in zoom-in-95 duration-300">
+              {/* Image side */}
+              <div className="sm:w-2/5 relative h-64 sm:h-auto">
+                <img
+                  src="/Professor.jpeg"
+                  alt="Dr. M. SenthilKumar"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent flex items-end p-6 sm:hidden">
+                  <h3 className="text-2xl font-bold text-white">Dr. M. SenthilKumar</h3>
+                </div>
               </div>
 
-              <div className="space-y-4 text-slate-600">
-                <p className="text-sm leading-relaxed">
-                  Dr. M. Senthilkumar is an accomplished and experienced educator with 18 years of dedicated teaching service. He secured an outstanding GATE score of 92.42 and successfully cleared the TRB examinations for Polytechnic (2006) and Engineering Colleges (2008), reflecting his strong academic foundation and subject expertise. In addition to his extensive teaching experience, he has published 15 research papers, showcasing his commitment to research and academic excellence. His combination of knowledge, experience, and research contributions makes him a highly respected mentor and guide for students.
-                </p>
-                <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 mb-4">
-                  <h4 className="text-xs font-bold text-slate-900 mb-3 uppercase tracking-wider">Contact Information</h4>
-                  <ul className="space-y-3">
-                    <li className="flex items-center gap-3 text-sm">
-                      <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
-                        <Mail className="w-4 h-4" />
-                      </div>
-                      <a href="mailto:chemistrykumarmalli@gmail.com" className="hover:text-blue-600 transition-colors font-medium">chemistrykumarmalli@gmail.com</a>
+              {/* Content side */}
+              <div className="sm:w-3/5 p-8 relative flex flex-col justify-center">
+                <button
+                  onClick={() => setShowProfessorModal(false)}
+                  className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 rounded-full transition-colors"
+                  aria-label="Close modal"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+
+                <div className="hidden sm:block mb-4">
+                  <h3 className="text-2xl font-extrabold text-slate-900">Dr.M.SENTHILKUMAR</h3>
+                  <p className="text-blue-600 font-medium text-sm">Associate Professor and Head of the Department (Chemistry)</p>
+                </div>
+
+                <div className="space-y-4 text-slate-600">
+                  <p className="text-sm leading-relaxed">
+                    Dr. M. Senthilkumar is an accomplished and experienced educator with 18 years of dedicated teaching service. He secured an outstanding GATE score of 92.42 and successfully cleared the TRB examinations for Polytechnic (2006) and Engineering Colleges (2008), reflecting his strong academic foundation and subject expertise. In addition to his extensive teaching experience, he has published 15 research papers, showcasing his commitment to research and academic excellence. His combination of knowledge, experience, and research contributions makes him a highly respected mentor and guide for students.
+                  </p>
+                  <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 mb-4">
+                    <h4 className="text-xs font-bold text-slate-900 mb-3 uppercase tracking-wider">Contact Information</h4>
+                    <ul className="space-y-3">
+                      <li className="flex items-center gap-3 text-sm">
+                        <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
+                          <Mail className="w-4 h-4" />
+                        </div>
+                        <a href="mailto:chemistrykumarmalli@gmail.com" className="hover:text-blue-600 transition-colors font-medium">chemistrykumarmalli@gmail.com</a>
+                      </li>
+                      <li className="flex items-center gap-3 text-sm">
+                        <div className="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center shrink-0">
+                          <Phone className="w-4 h-4" />
+                        </div>
+                        <a href="tel:+919751778569" className="hover:text-green-600 transition-colors font-medium">+91 9751778569</a>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <h4 className="text-xs font-bold text-slate-900 mb-3 uppercase tracking-wider mt-6">Credentials & Publications</h4>
+                  <ul className="space-y-3 text-sm">
+                    <li className="flex items-start gap-3">
+                      <Award className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
+                      <span className="leading-relaxed">Associate Professor and Head of the Department (Chemistry) at GCE, Dharmapuri.</span>
                     </li>
-                    <li className="flex items-center gap-3 text-sm">
-                      <div className="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center shrink-0">
-                        <Phone className="w-4 h-4" />
+                    <li className="flex items-start gap-3">
+                      <GraduationCap className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" />
+                      <span className="leading-relaxed">M.Sc, M.Phil, Ph.D. in Chemistry.</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <BookOpen className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
+                      <div>
+                        <span className="block mb-1 font-medium text-slate-700">Author of 2 books:</span>
+                        <ul className="list-disc list-outside text-slate-500 ml-4 space-y-1">
+                          <li>Competetive inorganic chemistry</li>
+                          <li>An easy approach to group theory in competetive examination</li>
+                        </ul>
                       </div>
-                      <a href="tel:+919751778569" className="hover:text-green-600 transition-colors font-medium">+91 9751778569</a>
                     </li>
                   </ul>
                 </div>
-
-                <h4 className="text-xs font-bold text-slate-900 mb-3 uppercase tracking-wider mt-6">Credentials & Publications</h4>
-                <ul className="space-y-3 text-sm">
-                  <li className="flex items-start gap-3">
-                    <Award className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-                    <span className="leading-relaxed">Associate Professor and Head of the Department (Chemistry) at GCE, Dharmapuri.</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <GraduationCap className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" />
-                    <span className="leading-relaxed">M.Sc, M.Phil, Ph.D. in Chemistry.</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <BookOpen className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
-                    <div>
-                      <span className="block mb-1 font-medium text-slate-700">Author of 2 books:</span>
-                      <ul className="list-disc list-outside text-slate-500 ml-4 space-y-1">
-                        <li>Competetive inorganic chemistry</li>
-                        <li>An easy approach to group theory in competetive examination</li>
-                      </ul>
-                    </div>
-                  </li>
-                </ul>
               </div>
-
-
             </div>
           </div>
-        </div>
-      )}
-
-    </div>
+        )
+      }
+    </div >
   );
 }
