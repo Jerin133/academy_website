@@ -36,7 +36,7 @@ export default function Home() {
       <Navbar />
 
       {/* Header Extension Block: Flash News Ticker + Sub-Navbar */}
-      <div className="w-full absolute top-16 left-0 right-0 z-40 flex flex-col">
+      <div className="w-full absolute top-[104px] lg:top-20 left-0 right-0 z-40 flex flex-col">
         {/* 📢 Premium Flash News Ticker */}
         <div className="w-full bg-slate-50/95 backdrop-blur-md border-b border-slate-200/60 overflow-hidden flex items-center relative h-10 group shadow-sm">
           
@@ -74,9 +74,9 @@ export default function Home() {
         {/* Transparent Sub-Navbar */}
         <div className="w-full bg-transparent border-b border-gray-100/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-center flex-[1_1_0%] items-center min-h-[3.5rem] py-2 gap-x-6 gap-y-2 sm:gap-x-12 flex-wrap text-center mx-auto w-full">
+            <div className="flex justify-center flex-[1_1_0%] items-center min-h-[4rem] py-2.5 gap-x-8 gap-y-2 sm:gap-x-14 flex-wrap text-center mx-auto w-full">
               <button
-                className={`font-semibold text-sm transition-colors whitespace-nowrap ${activeDropdown ? "text-slate-600" : "text-blue-600"
+                className={`font-semibold text-base transition-colors whitespace-nowrap ${activeDropdown ? "text-slate-600" : "text-blue-600"
                   }`}
               >
                 Home
@@ -90,7 +90,7 @@ export default function Home() {
               >
                 <button
                   onClick={(e) => toggleDropdown(e, "courses")}
-                  className={`text-slate-600 hover:text-blue-600 font-semibold text-sm transition-colors py-2 whitespace-nowrap cursor-pointer ${activeDropdown === "courses" ? "text-blue-600" : ""}`}
+                  className={`text-slate-600 hover:text-blue-600 font-semibold text-base transition-colors py-2.5 whitespace-nowrap cursor-pointer ${activeDropdown === "courses" ? "text-blue-600" : ""}`}
                 >
                   Courses
                 </button>
@@ -112,7 +112,7 @@ export default function Home() {
               >
                 <button
                   onClick={(e) => toggleDropdown(e, "classes")}
-                  className={`text-slate-600 hover:text-blue-600 font-semibold text-sm transition-colors py-2 whitespace-nowrap cursor-pointer ${activeDropdown === "classes" ? "text-blue-600" : ""}`}
+                  className={`text-slate-600 hover:text-blue-600 font-semibold text-base transition-colors py-2.5 whitespace-nowrap cursor-pointer ${activeDropdown === "classes" ? "text-blue-600" : ""}`}
                 >
                   Classes
                 </button>
@@ -128,7 +128,7 @@ export default function Home() {
               {/* Contact Us */}
               <button
                 onClick={scrollToProfessor}
-                className="text-slate-600 hover:text-blue-600 font-semibold text-sm transition-colors py-2 whitespace-nowrap"
+                className="text-slate-600 hover:text-blue-600 font-semibold text-base transition-colors py-2.5 whitespace-nowrap"
               >
                 Contact Us
               </button>
@@ -138,7 +138,7 @@ export default function Home() {
       </div>
 
       {/* 🌟 Refined Professional Hero Section */}
-      <section className="relative pt-40 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-white">
+      <section className="relative pt-60 lg:pt-52 pb-20 lg:pb-32 overflow-hidden bg-white">
         {/* Very subtle background pattern */}
         < div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] opacity-40" ></div >
         {/* Soft abstract blur */}
