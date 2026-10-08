@@ -150,6 +150,26 @@ export default function AdminDashboard() {
           </div>
         </Link>
 
+        {/* Student Approvals & Management */}
+        <Link to="students" className="group block">
+          <div className="bg-white h-full p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-2xl transition-all duration-500 relative overflow-hidden group-hover:-translate-y-2">
+            <div className="absolute top-0 right-0 w-48 h-48 bg-emerald-50/50 rounded-bl-full -z-10 transition-transform duration-700 group-hover:scale-150"></div>
+
+            <div className="w-16 h-16 bg-emerald-100/80 text-emerald-600 rounded-2xl flex items-center justify-center mb-6 shadow-inner group-hover:bg-emerald-600 group-hover:text-white transition-colors duration-500">
+              <Users className="h-8 w-8" />
+            </div>
+            <h3 className="text-2xl font-bold text-slate-900 mb-3 group-hover:text-emerald-600 transition-colors">
+              Student Approvals
+            </h3>
+            <p className="text-slate-500 text-lg leading-relaxed mb-8 font-medium">
+              Review new student registrations, grant portal access, and manage user approvals.
+            </p>
+            <div className="flex items-center text-emerald-600 font-bold text-sm bg-emerald-50 w-max px-4 py-2 rounded-lg group-hover:bg-emerald-100 transition-colors">
+              Review Students <ArrowRight className="h-4 w-4 ml-1" />
+            </div>
+          </div>
+        </Link>
+
       </div>
     </div>
   );

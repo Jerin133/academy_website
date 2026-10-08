@@ -33,8 +33,9 @@ export default function Login() {
       toast.success("Logged in successfully!");
       navigate("/dashboard");
     } catch (err) {
-      setError("Invalid credentials. Please try again.");
-      toast.error("Invalid credentials.");
+      const errorMsg = typeof err.response?.data === 'string' ? err.response.data : "Invalid credentials. Please try again.";
+      setError(errorMsg);
+      toast.error(errorMsg);
     } finally {
       setIsLoading(false);
     }
@@ -89,7 +90,12 @@ export default function Login() {
 
             <div>
               <div className="mb-1.5">
-                <label className="block text-sm font-medium text-slate-700">Password</label>
+                <div className="flex items-center justify-between">
+                  <label className="block text-sm font-medium text-slate-700">Password</label>
+                  <Link to="/forgot-password" className="text-xs font-semibold text-blue-600 hover:text-blue-700 transition-colors">
+                    Forgot password?
+                  </Link>
+                </div>
               </div>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">

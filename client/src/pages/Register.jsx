@@ -29,8 +29,8 @@ export default function Register() {
         { name, email, password }
       );
 
-      toast.success("Account created successfully!");
-      navigate("/login");
+      toast.success("Account registered! Awaiting admin approval.", { duration: 5000 });
+      navigate("/login", { state: { registered: true } });
     } catch (err) {
       setError("User already exists or an error occurred.");
       toast.error("User already exists");

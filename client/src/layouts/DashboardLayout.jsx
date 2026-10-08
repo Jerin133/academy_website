@@ -1,10 +1,42 @@
-import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
+import axios from "axios";
+import toast from "react-hot-toast";
 import Sidebar from "../components/Sidebar";
 import { Menu, GraduationCap } from "lucide-react";
+import { API_URL } from "../config";
 
 export default function DashboardLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const verifyStudentAuth = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        navigate("/login");
+        return;
+      }
+      try {
+        await axios.get(`${API_URL}/api/auth/me`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+      } catch (err) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("userName");
+        const serverMsg = err.response?.data;
+        if (err.response?.status === 403) {
+          toast.error("Your account is pending admin approval.");
+        } else if (typeof serverMsg === 'string' && serverMsg.includes("another device")) {
+          toast.error("Session ended: Your account was logged in on another system.", { duration: 5000 });
+        } else {
+          toast.error("Please sign in to access student portal.");
+        }
+        navigate("/login");
+      }
+    };
+    verifyStudentAuth();
+  }, [navigate]);
 
   return (
     <div className="bg-slate-50 h-screen overflow-hidden flex font-sans text-slate-900">

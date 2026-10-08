@@ -39,11 +39,11 @@ export default function Home() {
       <div className="w-full absolute top-[104px] lg:top-20 left-0 right-0 z-40 flex flex-col">
         {/* 📢 Premium Flash News Ticker */}
         <div className="w-full bg-slate-50/95 backdrop-blur-md border-b border-slate-200/60 overflow-hidden flex items-center relative h-10 group shadow-sm">
-          
+
           {/* Fixed "Updates" Badge on the left */}
           <div className="absolute left-0 z-20 h-full flex items-center px-4 sm:px-5 bg-gradient-to-r from-blue-700 to-blue-600 shadow-[4px_0_12px_-2px_rgba(37,99,235,0.4)]">
             <span className="flex items-center gap-1.5 text-white font-bold text-[11px] sm:text-xs tracking-wider uppercase">
-               <Zap className="w-3.5 h-3.5 fill-amber-400 text-amber-400 animate-pulse" /> Updates
+              <Zap className="w-3.5 h-3.5 fill-amber-400 text-amber-400 animate-pulse" /> Updates
             </span>
             {/* Angled edge */}
             <div className="absolute right-[-14px] top-0 h-0 w-0 border-y-[20px] border-y-transparent border-l-[14px] border-l-blue-600"></div>
@@ -54,10 +54,10 @@ export default function Home() {
           <div className="flex whitespace-nowrap animate-ticker group-hover:[animation-play-state:paused] items-center text-[13px] font-medium pl-[110px] sm:pl-[140px]">
             {/* Ticker Content duplicated for seamless infinite scroll effect */}
             <div className="flex items-center gap-10 pr-10">
-              <span className="flex items-center gap-2.5 text-slate-800"><span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-gradient-to-r from-red-500 to-rose-500 text-white shadow-sm ring-1 ring-red-500/20">NEW</span> Advanced Organic Synthesis Masterclass enrolling now!</span>
-              <span className="flex items-center gap-2.5 text-slate-700"><span className="flex items-center justify-center w-5 h-5 rounded-full bg-blue-100"><Star className="w-3 h-3 text-blue-600 fill-blue-600" /></span> Join our upcoming live Q&A session with Dr. M SenthilKumar this Friday.</span>
-              <span className="flex items-center gap-2.5 text-slate-700"><span className="flex items-center justify-center w-5 h-5 rounded-full bg-emerald-100"><CheckCircle2 className="w-3 h-3 text-emerald-600" /></span> Term 2 examination results have been published in the student portal.</span>
-              <span className="flex items-center gap-2.5 text-slate-700"><span className="flex items-center justify-center w-5 h-5 rounded-full bg-indigo-100"><TrendingUp className="w-3 h-3 text-indigo-600" /></span> Early bird registration for the Summer Crash Course ends in <span className="font-bold text-indigo-600">3 days</span>.</span>
+              <span className="flex items-center gap-2.5 text-slate-800"><span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-gradient-to-r from-red-500 to-rose-500 text-white shadow-sm ring-1 ring-red-500/20">NEW</span> Advanced Organic Chemistry Masterclass enroll now!</span>
+              <span className="flex items-center gap-2.5 text-slate-700"><span className="flex items-center justify-center w-5 h-5 rounded-full bg-blue-100"><Star className="w-3 h-3 text-blue-600 fill-blue-600" /></span> Join our upcoming live Q&A sessions with Dr. M SenthilKumar.</span>
+              <span className="flex items-center gap-2.5 text-slate-700"><span className="flex items-center justify-center w-5 h-5 rounded-full bg-emerald-100"><CheckCircle2 className="w-3 h-3 text-emerald-600" /></span> Special Training for TRB, SET and NET.</span>
+              <span className="flex items-center gap-2.5 text-slate-700"><span className="flex items-center justify-center w-5 h-5 rounded-full bg-indigo-100"><TrendingUp className="w-3 h-3 text-indigo-600" /></span> Join with Dr. M. Senthilkumar to crack the government exams.</span>
             </div>
 
             <div className="flex items-center gap-10 pr-10" aria-hidden="true">
@@ -202,7 +202,7 @@ export default function Home() {
         {/* Glow effects */}
         <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-64 h-64 bg-blue-500/30 rounded-full blur-[80px] pointer-events-none"></div>
         <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-64 h-64 bg-indigo-500/30 rounded-full blur-[80px] pointer-events-none"></div>
-        
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
             <div className="flex items-center flex-col md:flex-row gap-6">
@@ -292,7 +292,7 @@ export default function Home() {
             {/* TRB Exam Card */}
             <div className="group relative bg-white rounded-[2rem] p-8 shadow-sm hover:shadow-2xl hover:shadow-blue-900/5 border border-slate-100 transition-all duration-300 hover:-translate-y-1 overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-50 to-transparent rounded-bl-full -z-10 transition-transform group-hover:scale-110"></div>
-              
+
               <div className="flex items-center justify-between mb-8">
                 <div className="w-16 h-16 rounded-2xl bg-blue-600 text-white flex items-center justify-center shadow-lg shadow-blue-600/20">
                   <BookOpen className="w-8 h-8" />
@@ -320,7 +320,7 @@ export default function Home() {
             {/* SET / NET Exam Card */}
             <div className="group relative bg-white rounded-[2rem] p-8 shadow-sm hover:shadow-2xl hover:shadow-indigo-900/5 border border-slate-100 transition-all duration-300 hover:-translate-y-1 overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-indigo-50 to-transparent rounded-bl-full -z-10 transition-transform group-hover:scale-110"></div>
-              
+
               <div className="flex items-center justify-between mb-8">
                 <div className="w-16 h-16 rounded-2xl bg-indigo-600 text-white flex items-center justify-center shadow-lg shadow-indigo-600/20">
                   <GraduationCap className="w-8 h-8" />
