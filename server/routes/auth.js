@@ -166,8 +166,9 @@ router.post("/forgot-password", async (req, res) => {
       </div>
     `;
 
-    // 1. Try Brevo HTTP API (Port 443 - HTTPS, sends to ANY recipient email address without domain restriction)
+    // 1. Try Brevo HTTP API (Port 443 - HTTPS, sends to ANY recipient email address)
     if (process.env.BREVO_API_KEY) {
+      const senderEmail = process.env.BREVO_SENDER_EMAIL || process.env.EMAIL_USER;
       const brevoResp = await fetch("https://api.brevo.com/v3/smtp/email", {
         method: "POST",
         headers: {
@@ -175,18 +176,19 @@ router.post("/forgot-password", async (req, res) => {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          sender: { name: "Chemistry Academy", email: process.env.EMAIL_USER || "noreply@academy.com" },
+          sender: { name: "Chemistry Academy", email: senderEmail },
           to: [{ email }],
           subject: emailSubject,
           htmlContent: emailHtml
         })
       });
 
+      const resData = await brevoResp.json().catch(() => ({}));
       if (brevoResp.ok) {
         return res.json({ message: "Verification code sent successfully to your email!" });
       } else {
-        const errJson = await brevoResp.json().catch(() => ({}));
-        console.error("Brevo API failed:", errJson);
+        console.error("Brevo API failed:", resData);
+        throw new Error(resData.message || resData.code || "Brevo email dispatch failed");
       }
     }
 
