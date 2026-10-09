@@ -7,17 +7,23 @@ import User from "../models/User.js";
 
 const router = express.Router();
 
-// Helper to create Nodemailer transporter
+// Helper to create Nodemailer transporter (force IPv4 + port 587 for Render compatibility)
 const createTransporter = () => {
   if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
     return null;
   }
   return nodemailer.createTransport({
-    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false, // use STARTTLS
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS
-    }
+    },
+    tls: {
+      rejectUnauthorized: false
+    },
+    family: 4  // Force IPv4 — fixes ENETUNREACH on Render
   });
 };
 
