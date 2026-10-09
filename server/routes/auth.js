@@ -153,32 +153,86 @@ router.post("/forgot-password", async (req, res) => {
     user.resetPasswordExpires = new Date(Date.now() + 15 * 60 * 1000); // 15 mins expiry
     await user.save();
 
+    const emailSubject = "Your Password Reset Verification Code - Chemistry Academy";
+    const emailHtml = `
+      <div style="font-family: Arial, sans-serif; padding: 24px; max-width: 480px; border: 1px solid #e2e8f0; border-radius: 16px; background-color: #ffffff;">
+        <h2 style="color: #4f46e5; margin-top: 0;">Password Reset Code</h2>
+        <p style="color: #334155; font-size: 15px;">Hello <b>${user.name || 'Student'}</b>,</p>
+        <p style="color: #475569; font-size: 14px; line-height: 1.5;">You requested to reset your account password. Please enter the following 6-digit verification code to complete the process:</p>
+        <div style="background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%); padding: 18px; font-size: 28px; font-weight: 800; letter-spacing: 6px; text-align: center; color: #ffffff; border-radius: 12px; margin: 24px 0;">
+          ${resetCode}
+        </div>
+        <p style="color: #64748b; font-size: 13px; line-height: 1.4;">This verification code is valid for <b>15 minutes</b>. If you did not request a password reset, please ignore this email.</p>
+      </div>
+    `;
+
+    // 1. Try Resend HTTP API (Port 443 - HTTPS, bypasses Render free tier SMTP blocks)
+    if (process.env.RESEND_API_KEY) {
+      const resendResp = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${process.env.RESEND_API_KEY}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          from: process.env.EMAIL_FROM || "Chemistry Academy <onboarding@resend.dev>",
+          to: [email],
+          subject: emailSubject,
+          html: emailHtml
+        })
+      });
+
+      if (resendResp.ok) {
+        return res.json({ message: "Verification code sent successfully to your email!" });
+      } else {
+        const errJson = await resendResp.json().catch(() => ({}));
+        console.error("Resend API failed:", errJson);
+        throw new Error(errJson.message || "Failed to send email via Resend HTTP API");
+      }
+    }
+
+    // 2. Try Brevo HTTP API (Port 443 - HTTPS)
+    if (process.env.BREVO_API_KEY) {
+      const brevoResp = await fetch("https://api.brevo.com/v3/smtp/email", {
+        method: "POST",
+        headers: {
+          "api-key": process.env.BREVO_API_KEY,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          sender: { name: "Chemistry Academy", email: process.env.EMAIL_USER || "noreply@academy.com" },
+          to: [{ email }],
+          subject: emailSubject,
+          htmlContent: emailHtml
+        })
+      });
+
+      if (brevoResp.ok) {
+        return res.json({ message: "Verification code sent successfully to your email!" });
+      } else {
+        const errJson = await brevoResp.json().catch(() => ({}));
+        console.error("Brevo API failed:", errJson);
+        throw new Error(errJson.message || "Failed to send email via Brevo HTTP API");
+      }
+    }
+
+    // 3. Try Nodemailer SMTP (Works on Localhost or Paid hosting plans)
     const transporter = await createTransporter();
     if (transporter) {
       await transporter.sendMail({
         from: `"Chemistry Academy" <${process.env.EMAIL_USER}>`,
         to: email,
-        subject: "Your Password Reset Verification Code - Chemistry Academy",
-        html: `
-          <div style="font-family: Arial, sans-serif; padding: 24px; max-width: 480px; border: 1px solid #e2e8f0; border-radius: 16px; background-color: #ffffff;">
-            <h2 style="color: #4f46e5; margin-top: 0;">Password Reset Code</h2>
-            <p style="color: #334155; font-size: 15px;">Hello <b>${user.name || 'Student'}</b>,</p>
-            <p style="color: #475569; font-size: 14px; line-height: 1.5;">You requested to reset your account password. Please enter the following 6-digit verification code to complete the process:</p>
-            <div style="background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%); padding: 18px; font-size: 28px; font-weight: 800; letter-spacing: 6px; text-align: center; color: #ffffff; border-radius: 12px; margin: 24px 0;">
-              ${resetCode}
-            </div>
-            <p style="color: #64748b; font-size: 13px; line-height: 1.4;">This verification code is valid for <b>15 minutes</b>. If you did not request a password reset, please ignore this email.</p>
-          </div>
-        `
+        subject: emailSubject,
+        html: emailHtml
       });
       return res.json({ message: "Verification code sent successfully to your Gmail account!" });
     } else {
       console.log(`[SMTP Config Missing] Reset Code for ${email} is: ${resetCode}`);
-      return res.status(400).json("Email credentials (EMAIL_USER and EMAIL_PASS) are not configured in server/.env file yet. Please set your Gmail & App Password.");
+      return res.status(400).json("Email service credentials are not configured in environment variables.");
     }
   } catch (err) {
     console.error("Forgot password email error:", err);
-    res.status(500).json("Failed to send email: " + (err.message || "SMTP error"));
+    res.status(500).json("Failed to send email: " + (err.message || "Connection error"));
   }
 });
 
