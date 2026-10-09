@@ -166,7 +166,31 @@ router.post("/forgot-password", async (req, res) => {
       </div>
     `;
 
-    // 1. Try Resend HTTP API (Port 443 - HTTPS, bypasses Render free tier SMTP blocks)
+    // 1. Try Brevo HTTP API (Port 443 - HTTPS, sends to ANY recipient email address without domain restriction)
+    if (process.env.BREVO_API_KEY) {
+      const brevoResp = await fetch("https://api.brevo.com/v3/smtp/email", {
+        method: "POST",
+        headers: {
+          "api-key": process.env.BREVO_API_KEY,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          sender: { name: "Chemistry Academy", email: process.env.EMAIL_USER || "noreply@academy.com" },
+          to: [{ email }],
+          subject: emailSubject,
+          htmlContent: emailHtml
+        })
+      });
+
+      if (brevoResp.ok) {
+        return res.json({ message: "Verification code sent successfully to your email!" });
+      } else {
+        const errJson = await brevoResp.json().catch(() => ({}));
+        console.error("Brevo API failed:", errJson);
+      }
+    }
+
+    // 2. Try Resend HTTP API (Port 443 - HTTPS)
     if (process.env.RESEND_API_KEY) {
       const resendResp = await fetch("https://api.resend.com/emails", {
         method: "POST",
@@ -188,31 +212,6 @@ router.post("/forgot-password", async (req, res) => {
         const errJson = await resendResp.json().catch(() => ({}));
         console.error("Resend API failed:", errJson);
         throw new Error(errJson.message || "Failed to send email via Resend HTTP API");
-      }
-    }
-
-    // 2. Try Brevo HTTP API (Port 443 - HTTPS)
-    if (process.env.BREVO_API_KEY) {
-      const brevoResp = await fetch("https://api.brevo.com/v3/smtp/email", {
-        method: "POST",
-        headers: {
-          "api-key": process.env.BREVO_API_KEY,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          sender: { name: "Chemistry Academy", email: process.env.EMAIL_USER || "noreply@academy.com" },
-          to: [{ email }],
-          subject: emailSubject,
-          htmlContent: emailHtml
-        })
-      });
-
-      if (brevoResp.ok) {
-        return res.json({ message: "Verification code sent successfully to your email!" });
-      } else {
-        const errJson = await brevoResp.json().catch(() => ({}));
-        console.error("Brevo API failed:", errJson);
-        throw new Error(errJson.message || "Failed to send email via Brevo HTTP API");
       }
     }
 
