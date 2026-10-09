@@ -3,17 +3,29 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import nodemailer from "nodemailer";
+import dns from "dns";
 import User from "../models/User.js";
 
 const router = express.Router();
 
-// Helper to create Nodemailer transporter (force IPv4 + port 587 for Render compatibility)
-const createTransporter = () => {
+// Helper to create Nodemailer transporter (force IPv4 resolution to bypass Render IPv6 ENETUNREACH)
+const createTransporter = async () => {
   if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
     return null;
   }
+
+  let hostIp = "smtp.gmail.com";
+  try {
+    const ips = await dns.promises.resolve4("smtp.gmail.com");
+    if (ips && ips.length > 0) {
+      hostIp = ips[0];
+    }
+  } catch (err) {
+    console.warn("DNS resolve4 warning:", err.message);
+  }
+
   return nodemailer.createTransport({
-    host: "smtp.gmail.com",
+    host: hostIp,
     port: 587,
     secure: false, // use STARTTLS
     auth: {
@@ -21,9 +33,9 @@ const createTransporter = () => {
       pass: process.env.EMAIL_PASS
     },
     tls: {
+      servername: "smtp.gmail.com",
       rejectUnauthorized: false
-    },
-    family: 4  // Force IPv4 — fixes ENETUNREACH on Render
+    }
   });
 };
 
@@ -141,7 +153,7 @@ router.post("/forgot-password", async (req, res) => {
     user.resetPasswordExpires = new Date(Date.now() + 15 * 60 * 1000); // 15 mins expiry
     await user.save();
 
-    const transporter = createTransporter();
+    const transporter = await createTransporter();
     if (transporter) {
       await transporter.sendMail({
         from: `"Chemistry Academy" <${process.env.EMAIL_USER}>`,
